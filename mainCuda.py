@@ -135,7 +135,7 @@ for step in range(1, n_iteraciones):
     
     # get how many new couples are going to be formed
     a_kargs = {'size': single_people.size, 'p': (1-p_partner, p_partner)}
-    new_couples = int(cp.sum(cp.random.choice((False, True), **a_kargs)))
+    new_couples = int(cp.sum(cp.random.choice((False, True), **a_kargs)))//2
     
     a_kargs = {'size':2*new_couples, 'replace':False}
     single_people = cp.random.choice(single_people, **a_kargs)

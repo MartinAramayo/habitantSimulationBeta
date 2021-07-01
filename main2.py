@@ -135,15 +135,9 @@ for step in range(1, n_iteraciones):
     # get how many new couples are going to be formed
     a_kargs = {'size': single_people.size, 'p': (1-p_partner, p_partner)}
     new_couples = np.random.choice((False, True), **a_kargs).sum()//2
-
-    # print('---------------------')    
-    # print(single_people)
-    # print(new_couples)
-    
+   
     a_kargs = {'size':2*new_couples, 'replace':False}
     single_people = np.random.choice(single_people, **a_kargs)
-    
-    # print(single_people)
     # toma algunas parejas AL AZAR !!!
     for nh1, nh2 in single_people.reshape((single_people.size//2, 2)):
         hbt.create_couple(people, nh1, nh2)
