@@ -103,57 +103,59 @@ for step in range(1, n_iteraciones):
             nc = habitant.nc
             hbt.kill(houses=houses, people=people, nh=nh, nc=nc) # deaths
     
+    # asigno a las parejas que son fertiles
+    lista_nh = copy(list(people.keys()))
+    for nh in lista_nh: ## use a copy of the current population
+        habitant = people[nh]
+        habitant.is_fertile_couple = hbt.is_fertile_couple(people, nh)
+    
     if people == {}: break
     
-    lista_nh = copy(list(people.keys()))
-    ###################################### child birth GOOOD
-    possible_parents = np.fromiter(
-        (nh for nh in lista_nh 
-         if (people[nh].middle_life 
-             and people[nh].emancipated
-             and people[nh].partner
-             and hbt.is_fertile_couple(people, nh))
-         ), 
+    # convierto mi diccionario de objetos en diccionario de diccionarios
+    people_table = {nh: habitant.__dict__ for nh, habitant in people.items()}
+    
+    # tiene que leer el dataframe from dict o tarda muchisimo mas, castea a int,
+    # los array cupy y numpy tienen todos sus elementos del mismo tipo
+    people_table = np.asarray(
+        pd.DataFrame.from_dict(people_table, orient='index'), 
         dtype=int)
     
-    a_kargs = {'size': possible_parents.size, 'p': (1-p_child, p_child)}
+    ###################################### child birth GOOOD
+    possible_parents = people_table[(people_table[:,6] 
+                                     & people_table[:,4]
+                                     & people_table[:,5]
+                                     & people_table[:,9]) == True]
+    
+    a_kargs = {'size': int(possible_parents.shape[0]), 'p': (1-p_child, p_child)}
     num_parents = np.random.choice((False, True), **a_kargs).sum()
     
     a_kargs = {'size':num_parents, 'replace':False}
-    possible_parents = np.random.choice(possible_parents, **a_kargs)
+    possible_parents = np.random.choice(possible_parents[:,0], **a_kargs)
     # toma algunos padres AL AZAR para que tengan hijos
     for nh in possible_parents:
         hbt.simulating_birth(houses, people, people[nh].nc)
     ###################################### single people GOOD
-    single_people = np.fromiter(
-        (nh for nh in lista_nh 
-        if (not people[nh].partner 
-            and people[nh].middle_life)
-        ), 
-        dtype=int)
+    single_people = people_table[((people_table[:,5] == False) # not partner
+                                 & people_table[:,6]) == True]
     
     # get how many new couples are going to be formed
-    a_kargs = {'size': single_people.size, 'p': (1-p_partner, p_partner)}
+    a_kargs = {'size': int(single_people.shape[0]), 'p': (1-p_partner, p_partner)}
     new_couples = np.random.choice((False, True), **a_kargs).sum()//2
    
     a_kargs = {'size':2*new_couples, 'replace':False}
-    single_people = np.random.choice(single_people, **a_kargs)
+    single_people = np.random.choice(single_people[:,0], **a_kargs)
     # toma algunas parejas AL AZAR !!!
     for nh1, nh2 in single_people.reshape((single_people.size//2, 2)):
         hbt.create_couple(people, nh1, nh2)
-    ################################## Moving out
-    movable = np.fromiter(
-        (nh for nh in lista_nh 
-         if (not people[nh].emancipated
-             and people[nh].middle_life)
-         ), 
-        dtype=int)
+    ################################## Moving out 
+    movable = people_table[((people_table[:,4] == False) # not emancipated 
+                          & people_table[:,6]) == True] # middle life
     
-    a_kargs = {'size': movable.size, 'p': (1-p_emancipate, p_emancipate)}
+    a_kargs = {'size': int(movable.shape[0]), 'p': (1-p_emancipate, p_emancipate)}
     num_movable = np.random.choice((False, True), **a_kargs).sum()
     
     a_kargs = {'size':num_movable, 'replace':False}
-    movable = np.random.choice(movable, **a_kargs)
+    movable = np.random.choice(movable[:,0], **a_kargs)
     
     empty_houses = hbt.get_empty_house(houses)
 

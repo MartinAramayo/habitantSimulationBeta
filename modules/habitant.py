@@ -69,7 +69,9 @@ class Habitant:
                  age,
                  gender,
                  emancipated,
-                 partner): 
+                 partner,
+                 is_fertile_couple=False,
+                 ): 
         self.nh = nh
         self.nc = nc
         self.age = age
@@ -84,6 +86,8 @@ class Habitant:
         
         self.is_alive = (self.age >= 0 
                          and self.age < LIFE_EXPECTANCY)
+        
+        self.is_fertile_couple = is_fertile_couple
         
     def __repr__(self):
         list_args = [
@@ -150,9 +154,12 @@ def house_has_vacant(houses, nc):
 # return boolean
 def is_fertile_couple(people, nh): # gender exclusive or
     habitante = people[nh]
-    pareja_habitante = people[habitante.partner]
-    return habitante.gender ^ pareja_habitante.gender
-
+    if habitante.partner:
+        pareja_habitante = people[habitante.partner]
+        return habitante.gender ^ pareja_habitante.gender
+    else:
+        return False
+    
 def tener_hijo(nc, nh, gender):
     nuevo_recien_nacido = recien_nacido(nh, nc, gender)
     hijoHabitante = Habitant(**nuevo_recien_nacido)
@@ -259,12 +266,14 @@ def nuevos_padres(nh_1, nc, gender):
           "nc": nc, 
           "age": randint(MIDDLE_LIFE_START, MIDDLE_LIFE_END), 
           "gender": gender, 
+          "is_fertile_couple": True,
           "emancipated": True, 
           "partner": nh_1 + 1}
     p1 = {"nh": nh_1 + 1, 
           "nc": nc, 
           "age": randint(MIDDLE_LIFE_START, MIDDLE_LIFE_END), 
           "gender": not gender, 
+          "is_fertile_couple": True,
           "emancipated": True, 
           "partner": nh_1}
     return p1, p2
