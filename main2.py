@@ -1,6 +1,7 @@
 import time ### timing
 start_time = time.time()
 ### modules
+import cupy as cp
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -17,7 +18,7 @@ import os, sys
 sys.path.append(os.path.join('modules'))
 # import mystat as mst
 import habitant as hbt
-from habitant import SimulationStats
+from habitant import SimulationStatsNUMPY as SimulationStats
 import auxPlot as aplot
 
 #################### seed
@@ -77,6 +78,16 @@ except FileExistsError:
 
 ## create a house and people system
 houses, people = hbt.condicion_inicial(**initial_condition)
+empty_houses = hbt.get_empty_house(houses)
+
+# convierto mi diccionario de objetos en diccionario de diccionarios
+people_table = {nh: habitant.__dict__ for nh, habitant in people.items()}
+
+# tiene que leer el dataframe from dict o tarda muchisimo mas, castea a int,
+# los array cupy y numpy tienen todos sus elementos del mismo tipo
+people_table = np.asarray(
+    pd.DataFrame.from_dict(people_table, orient='index'), 
+    dtype=int)
 
 ## logs 
 num_data_df = pd.DataFrame()
@@ -85,7 +96,8 @@ step = 0
 
 ## number data stats
 aux_args = {
-    "other": SimulationStats(people, houses).number_get_stats(),
+    "other": SimulationStats(people_table, houses, empty_houses).number_get_stats(),
+    # "other": SimulationStats(people, houses).number_get_stats(),
     "ignore_index": True
 }      
 num_data_df = num_data_df.append(**aux_args)
@@ -165,8 +177,9 @@ for step in range(1, n_iteraciones):
     ############################################### Getting metrics
     ## number data stats
     aux_args = {
-        "other": SimulationStats(people, houses).number_get_stats(),
+        "other": SimulationStats(people_table, houses, empty_houses).number_get_stats(),
         "ignore_index": True
+        # "other": SimulationStats(people, houses).number_get_stats(),
     }      
     num_data_df = num_data_df.append(**aux_args)
 
