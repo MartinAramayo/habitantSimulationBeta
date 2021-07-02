@@ -1,7 +1,7 @@
 import time ### timing
 start_time = time.time()
 ### modules
-# import cupy as cp
+import cupy as cp
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -18,8 +18,8 @@ import os, sys
 sys.path.append(os.path.join('modules'))
 # import mystat as mst
 import habitant as hbt
-# from habitant import SimulationStatsCUPY as SimulationStats
-from habitant import SimulationStatsNUMPY as SimulationStats
+from habitant import SimulationStatsCUPY as SimulationStats
+# from habitant import SimulationStatsNUMPY as SimulationStats
 import auxPlot as aplot
 
 #################### seed
