@@ -140,7 +140,7 @@ for step in range(1, n_iteraciones):
              and people[nh].is_fertile_couple)
     ]
     
-    a_kargs = {'size': int(possible_parents.shape[0]), 'p': (1-p_child, p_child)}
+    a_kargs = {'size': len(possible_parents), 'p': (1-p_child, p_child)}
     num_parents = np.random.choice((False, True), **a_kargs).sum()
     
     a_kargs = {'size':num_parents, 'replace':False}
@@ -169,7 +169,7 @@ for step in range(1, n_iteraciones):
              and people[nh].middle_life)
         ] 
     
-    a_kargs = {'size': int(movable.shape[0]), 'p': (1-p_emancipate, p_emancipate)}
+    a_kargs = {'size': len(movable), 'p': (1-p_emancipate, p_emancipate)}
     num_movable = np.random.choice((False, True), **a_kargs).sum()
     
     a_kargs = {'size':num_movable, 'replace':False}
