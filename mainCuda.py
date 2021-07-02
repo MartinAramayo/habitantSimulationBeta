@@ -143,7 +143,6 @@ for step in range(1, n_iteraciones):
     
     a_kargs = {'size':num_parents, 'replace':False}
     possible_parents = cp.random.choice(possible_parents[:,0], **a_kargs)
-    possible_parents = possible_parents.flat
     # toma algunos padres AL AZAR para que tengan hijos
     for nh in possible_parents:
         hbt.simulating_birth(houses, people, people[int(nh)].nc)

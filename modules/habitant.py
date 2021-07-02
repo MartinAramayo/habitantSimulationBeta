@@ -369,29 +369,6 @@ class SimulationStats:
         }        
         return output
         
-    # def prnt(self):
-    #     aux_string = (
-    #         "Numero de habitante: \n" + str(self.nh),
-    #         "Numero de casa: \n" + str(self.nc),
-    #         "Edad: \n" + str(self.age),
-    #         "Genero: \n" + str(self.gender),
-    #         "Emancipado: \n" + str(self.emancipated),
-    #         "Esta en mediana edad: \n" + str(self.middle_life),
-    #     )
-    #     # aux_string = "\n".join(aux_string)
-    #     aux_string_number = (            
-    #         "Numero de Habitantes: \n"+ str(self.num_habitants),
-    #         "Numero de genero True: \n"+ str(self.num_gender),
-    #         "Numero de Emancipados: \n"+ str(self.num_emancipated),
-    #         "Numero de Mid life habitants: \n"+ str(self.num_middle_life),
-    #         "Numero de Parejas: \n"+ str(self.num_partner),
-    #     )
-    #     aux_string = aux_string.join(aux_string_number)
-    #     if self.partner:
-    #         aux_string += "\nNumero de habitante de pareja: \n" + str(self.partner)
-        
-    #     print(aux_string)
-        
 class SimulationStatsNUMPY:
     
     def __init__(self, people_table, houses, empty_houses): 
@@ -432,29 +409,6 @@ class SimulationStatsNUMPY:
             "num_non_empty_houses": self.num_non_empty_houses
         }        
         return output
-        
-    # def prnt(self):
-    #     aux_string = (
-    #         "Numero de habitante: \n" + str(self.nh),
-    #         "Numero de casa: \n" + str(self.nc),
-    #         "Edad: \n" + str(self.age),
-    #         "Genero: \n" + str(self.gender),
-    #         "Emancipado: \n" + str(self.emancipated),
-    #         "Esta en mediana edad: \n" + str(self.middle_life),
-    #     )
-    #     # aux_string = "\n".join(aux_string)
-    #     aux_string_number = (            
-    #         "Numero de Habitantes: \n"+ str(self.num_habitants),
-    #         "Numero de genero True: \n"+ str(self.num_gender),
-    #         "Numero de Emancipados: \n"+ str(self.num_emancipated),
-    #         "Numero de Mid life habitants: \n"+ str(self.num_middle_life),
-    #         "Numero de Parejas: \n"+ str(self.num_partner),
-    #     )
-    #     aux_string = aux_string.join(aux_string_number)
-    #     if self.partner:
-    #         aux_string += "\nNumero de habitante de pareja: \n" + str(self.partner)
-        
-    #     print(aux_string)
 
 class SimulationStatsCUPY:
     
@@ -496,29 +450,6 @@ class SimulationStatsCUPY:
             "num_non_empty_houses": self.num_non_empty_houses
         }        
         return output
-        
-    # def prnt(self):
-    #     aux_string = (
-    #         "Numero de habitante: \n" + str(self.nh),
-    #         "Numero de casa: \n" + str(self.nc),
-    #         "Edad: \n" + str(self.age),
-    #         "Genero: \n" + str(self.gender),
-    #         "Emancipado: \n" + str(self.emancipated),
-    #         "Esta en mediana edad: \n" + str(self.middle_life),
-    #     )
-    #     # aux_string = "\n".join(aux_string)
-    #     aux_string_number = (            
-    #         "Numero de Habitantes: \n"+ str(self.num_habitants),
-    #         "Numero de genero True: \n"+ str(self.num_gender),
-    #         "Numero de Emancipados: \n"+ str(self.num_emancipated),
-    #         "Numero de Mid life habitants: \n"+ str(self.num_middle_life),
-    #         "Numero de Parejas: \n"+ str(self.num_partner),
-    #     )
-    #     aux_string = aux_string.join(aux_string_number)
-    #     if self.partner:
-    #         aux_string += "\nNumero de habitante de pareja: \n" + str(self.partner)
-        
-    #     print(aux_string)
 
 ############################################### Experiments files
 

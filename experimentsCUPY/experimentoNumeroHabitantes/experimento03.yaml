@@ -1,4 +1,4 @@
-n_iteraciones: 2000
+n_iteraciones: 1000
 p_emancipate: 0.3
 p_partner: 0.3
 p_child: 0.1
@@ -10,11 +10,3 @@ initial_condition:
   house_size: 3
 comment: |
   Baja fertilidad y muerte prematura no nula
-execution_time_sec: 5.8404860496521
-num_iterations_real: 412
-MIDDLE_LIFE_START: 20
-MIDDLE_LIFE_END: 50
-LIFE_EXPECTANCY: 85
-INFANCY: 14
-HOUSE_CAP: 10
-execution_time: Thu Jul  1 23:47:16 2021

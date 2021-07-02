@@ -133,35 +133,41 @@ for step in range(1, n_iteraciones):
         dtype=int)
     
     ###################################### child birth GOOOD
-    possible_parents = people_table[(people_table[:,6] 
-                                     & people_table[:,4]
-                                     & people_table[:,5]
-                                     & people_table[:,9]) == True]
+    possible_parents = [nh for nh in lista_nh 
+         if (people[nh].middle_life 
+             and people[nh].emancipated
+             and people[nh].partner
+             and people[nh].is_fertile_couple)
+    ]
     
     a_kargs = {'size': int(possible_parents.shape[0]), 'p': (1-p_child, p_child)}
     num_parents = np.random.choice((False, True), **a_kargs).sum()
     
     a_kargs = {'size':num_parents, 'replace':False}
-    possible_parents = np.random.choice(possible_parents[:,0], **a_kargs)
+    possible_parents = np.random.choice(possible_parents, **a_kargs)
     # toma algunos padres AL AZAR para que tengan hijos
     for nh in possible_parents:
         hbt.simulating_birth(houses, people, people[nh].nc)
     ###################################### single people GOOD
-    single_people = people_table[((people_table[:,5] == False) # not partner
-                                 & people_table[:,6]) == True]
+    single_people = [nh for nh in lista_nh 
+        if (not people[nh].partner 
+            and people[nh].middle_life)
+        ]
     
     # get how many new couples are going to be formed
-    a_kargs = {'size': int(single_people.shape[0]), 'p': (1-p_partner, p_partner)}
+    a_kargs = {'size': len(single_people), 'p': (1-p_partner, p_partner)}
     new_couples = np.random.choice((False, True), **a_kargs).sum()//2
    
     a_kargs = {'size':2*new_couples, 'replace':False}
-    single_people = np.random.choice(single_people[:,0], **a_kargs)
+    single_people = np.random.choice(single_people, **a_kargs)
     # toma algunas parejas AL AZAR !!!
     for nh1, nh2 in single_people.reshape((single_people.size//2, 2)):
         hbt.create_couple(people, nh1, nh2)
     ################################## Moving out 
-    movable = people_table[((people_table[:,4] == False) # not emancipated 
-                          & people_table[:,6]) == True] # middle life
+    movable = [nh for nh in lista_nh 
+         if (not people[nh].emancipated
+             and people[nh].middle_life)
+        ] 
     
     a_kargs = {'size': int(movable.shape[0]), 'p': (1-p_emancipate, p_emancipate)}
     num_movable = np.random.choice((False, True), **a_kargs).sum()

@@ -1,13 +1,13 @@
 a=(10 \
- 100 \
+ 500 \
  1000 \
- 10000 \
- 100000 \
- 110000 \
- 120000 \
- 130000 \
- 140000 \
- 150000)
+ 1500 \
+ 2500 \
+ 3000 \
+ 3500 \
+ 4000 \
+ 4500 \
+ 5000)
 
 for leadingZero in {01..10}; do 
     # leadingZero tiene leading zero
@@ -19,7 +19,7 @@ for leadingZero in {01..10}; do
     
     value="${a[$index]}" # value en la lista
 
-    echo "n_iteraciones: 2000" >> "$fileHere"
+    echo "n_iteraciones: 1000" >> "$fileHere"
     echo "p_emancipate: 0.3" >> "$fileHere"
     echo "p_partner: 0.3" >> "$fileHere"
     echo "p_child: 0.1" >> "$fileHere"
