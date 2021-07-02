@@ -18,7 +18,7 @@ import os, sys
 sys.path.append(os.path.join('modules'))
 # import mystat as mst
 import habitant as hbt
-from habitant import SimulationStatsCUDA as SimulationStats
+from habitant import SimulationStatsCUPY as SimulationStats
 import auxPlot as aplot
 
 #################### seed
