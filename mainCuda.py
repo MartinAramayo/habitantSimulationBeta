@@ -1,7 +1,7 @@
 import time ### timing
 start_time = time.time()
 ### modules
-import cupy as cp
+# import cupy as cp
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -18,7 +18,8 @@ import os, sys
 sys.path.append(os.path.join('modules'))
 # import mystat as mst
 import habitant as hbt
-from habitant import SimulationStatsCUPY as SimulationStats
+# from habitant import SimulationStatsCUPY as SimulationStats
+from habitant import SimulationStatsNUMPY as SimulationStats
 import auxPlot as aplot
 
 #################### seed
@@ -86,6 +87,7 @@ people_table = {nh: habitant.__dict__ for nh, habitant in people.items()}
 # tiene que leer el dataframe from dict o tarda muchisimo mas, castea a int,
 # los array cupy y numpy tienen todos sus elementos del mismo tipo
 people_table = cp.asarray(
+# people_table = np.asarray(
     pd.DataFrame.from_dict(people_table, orient='index'), 
     dtype=int)
 
@@ -128,21 +130,23 @@ for step in range(1, n_iteraciones):
     
     # tiene que leer el dataframe from dict o tarda muchisimo mas, castea a int,
     # los array cupy y numpy tienen todos sus elementos del mismo tipo
-    people_table = cp.asarray(
+    # people_table = cp.asarray(
+    people_table = np.asarray(
         pd.DataFrame.from_dict(people_table, orient='index'), 
         dtype=int)
     
     ###################################### child birth GOOOD
-    possible_parents = people_table[(people_table[:,6] 
-                                     & people_table[:,4]
-                                     & people_table[:,5]
-                                     & people_table[:,9]) == True]
+    possible_parents = people_table[(people_table[:,6] # is middle life
+                                     & people_table[:,4] # is emancipated
+                                     & (people_table[:,5] != 0) # has partner
+                                     & people_table[:,9]) == True] 
     
-    a_kargs = {'size': int(possible_parents.shape[0]), 'p': (1-p_child, p_child)}
-    num_parents = int(cp.random.choice((False, True), **a_kargs).sum())
+    num_parents = int(np.random.binomial(len(possible_parents), p=p_child))
     
     a_kargs = {'size':num_parents, 'replace':False}
     possible_parents = cp.random.choice(possible_parents[:,0], **a_kargs)
+    # possible_parents = np.random.choice(possible_parents[:,0], **a_kargs)
+    # possible_parents = np.random.choice(possible_parents, **a_kargs)
     # toma algunos padres AL AZAR para que tengan hijos
     for nh in possible_parents:
         hbt.simulating_birth(houses, people, people[int(nh)].nc)
@@ -151,11 +155,11 @@ for step in range(1, n_iteraciones):
                                  & people_table[:,6]) == True]
     
     # get how many new couples are going to be formed
-    a_kargs = {'size': int(single_people.shape[0]), 'p': (1-p_partner, p_partner)}
-    new_couples = int(cp.random.choice((False, True), **a_kargs).sum())//2
+    new_couples = int(np.random.binomial(len(single_people), p=p_partner))//2
    
     a_kargs = {'size':2*new_couples, 'replace':False}
     single_people = cp.random.choice(single_people[:,0], **a_kargs)
+    # single_people = np.random.choice(single_people[:,0], **a_kargs)
     # toma algunas parejas AL AZAR !!!
     for nh1, nh2 in single_people.reshape((single_people.size//2, 2)):
         hbt.create_couple(people, int(nh1), int(nh2))
@@ -163,11 +167,11 @@ for step in range(1, n_iteraciones):
     movable = people_table[((people_table[:,4] == False) # not emancipated 
                           & people_table[:,6]) == True] # middle life
     
-    a_kargs = {'size': int(movable.shape[0]), 'p': (1-p_emancipate, p_emancipate)}
-    num_movable = int(cp.random.choice((False, True), **a_kargs).sum())
+    num_movable = int(np.random.binomial(len(movable), p=p_emancipate))
     
     a_kargs = {'size':num_movable, 'replace':False}
     movable = cp.random.choice(movable[:,0], **a_kargs)
+    # movable = np.random.choice(movable[:,0], **a_kargs)
     
     empty_houses = hbt.get_empty_house(houses)
 

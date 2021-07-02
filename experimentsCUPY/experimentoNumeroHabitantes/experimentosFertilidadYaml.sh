@@ -19,7 +19,7 @@ for leadingZero in {01..10}; do
     
     value="${a[$index]}" # value en la lista
 
-    echo "n_iteraciones: 1000" >> "$fileHere"
+    echo "n_iteraciones: 2000" >> "$fileHere"
     echo "p_emancipate: 0.3" >> "$fileHere"
     echo "p_partner: 0.3" >> "$fileHere"
     echo "p_child: 0.1" >> "$fileHere"

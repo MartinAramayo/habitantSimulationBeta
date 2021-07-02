@@ -140,8 +140,7 @@ for step in range(1, n_iteraciones):
              and people[nh].is_fertile_couple)
     ]
     
-    a_kargs = {'size': len(possible_parents), 'p': (1-p_child, p_child)}
-    num_parents = np.random.choice((False, True), **a_kargs).sum()
+    num_parents = np.random.binomial(len(possible_parents), p=p_child)
     
     a_kargs = {'size':num_parents, 'replace':False}
     possible_parents = np.random.choice(possible_parents, **a_kargs)
@@ -155,8 +154,7 @@ for step in range(1, n_iteraciones):
         ]
     
     # get how many new couples are going to be formed
-    a_kargs = {'size': len(single_people), 'p': (1-p_partner, p_partner)}
-    new_couples = np.random.choice((False, True), **a_kargs).sum()//2
+    new_couples = int(np.random.binomial(len(single_people), p=p_partner))//2
    
     a_kargs = {'size':2*new_couples, 'replace':False}
     single_people = np.random.choice(single_people, **a_kargs)
@@ -169,8 +167,8 @@ for step in range(1, n_iteraciones):
              and people[nh].middle_life)
         ] 
     
-    a_kargs = {'size': len(movable), 'p': (1-p_emancipate, p_emancipate)}
-    num_movable = np.random.choice((False, True), **a_kargs).sum()
+
+    num_movable = int(np.random.binomial(len(movable), p=p_emancipate))
     
     a_kargs = {'size':num_movable, 'replace':False}
     movable = np.random.choice(movable, **a_kargs)
