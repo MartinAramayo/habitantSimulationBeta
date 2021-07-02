@@ -139,7 +139,7 @@ for step in range(1, n_iteraciones):
                                      & people_table[:,9]) == True]
     
     a_kargs = {'size': int(possible_parents.shape[0]), 'p': (1-p_child, p_child)}
-    num_parents = cp.random.choice((False, True), **a_kargs).sum()
+    num_parents = int(cp.random.choice((False, True), **a_kargs).sum())
     
     a_kargs = {'size':num_parents, 'replace':False}
     possible_parents = cp.random.choice(possible_parents[:,0], **a_kargs)
@@ -153,7 +153,7 @@ for step in range(1, n_iteraciones):
     
     # get how many new couples are going to be formed
     a_kargs = {'size': int(single_people.shape[0]), 'p': (1-p_partner, p_partner)}
-    new_couples = cp.random.choice((False, True), **a_kargs).sum()//2
+    new_couples = int(cp.random.choice((False, True), **a_kargs).sum())//2
    
     a_kargs = {'size':2*new_couples, 'replace':False}
     single_people = cp.random.choice(single_people[:,0], **a_kargs)
@@ -165,7 +165,7 @@ for step in range(1, n_iteraciones):
                           & people_table[:,6]) == True] # middle life
     
     a_kargs = {'size': int(movable.shape[0]), 'p': (1-p_emancipate, p_emancipate)}
-    num_movable = cp.random.choice((False, True), **a_kargs).sum()
+    num_movable = int(cp.random.choice((False, True), **a_kargs).sum())
     
     a_kargs = {'size':num_movable, 'replace':False}
     movable = cp.random.choice(movable[:,0], **a_kargs)
