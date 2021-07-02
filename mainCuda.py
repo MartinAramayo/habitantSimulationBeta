@@ -131,7 +131,7 @@ for step in range(1, n_iteraciones):
     # tiene que leer el dataframe from dict o tarda muchisimo mas, castea a int,
     # los array cupy y numpy tienen todos sus elementos del mismo tipo
     # people_table = cp.asarray(
-    people_table = np.asarray(
+    people_table = cp.asarray(
         pd.DataFrame.from_dict(people_table, orient='index'), 
         dtype=int)
     
