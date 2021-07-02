@@ -423,13 +423,13 @@ class SimulationStatsCUPY:
         
         self.num_habitants = len(people_table)
         
-        self.num_gender_1 = sum(self.gender)
+        self.num_gender_1 = int(cp.sum(self.gender))
         self.num_gender_2 = self.num_habitants - self.num_gender_1
-        self.num_emancipated = sum(self.emancipated)
-        self.num_middle_life = sum(self.middle_life)
-        self.num_couples = sum(self.partner > 0)
-        self.num_childs = sum(self.childs)
-        self.num_births = sum(self.age == 0)
+        self.num_emancipated = int(cp.sum(self.emancipated))
+        self.num_middle_life = int(cp.sum(self.middle_life))
+        self.num_couples = int(cp.sum(self.partner > 0))
+        self.num_childs = int(cp.sum(self.childs))
+        self.num_births = int(cp.sum(self.age == 0))
         
         self.num_houses = len(houses) 
         self.num_empty_houses = len(empty_houses)
