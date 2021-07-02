@@ -173,7 +173,7 @@ for step in range(1, n_iteraciones):
     num_movable = np.random.choice((False, True), **a_kargs).sum()
     
     a_kargs = {'size':num_movable, 'replace':False}
-    movable = np.random.choice(movable[:,0], **a_kargs)
+    movable = np.random.choice(movable, **a_kargs)
     
     empty_houses = hbt.get_empty_house(houses)
 
