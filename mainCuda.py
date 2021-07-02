@@ -96,7 +96,8 @@ step = 0
 
 ## number data stats
 aux_args = {
-    "other": SimulationStats(people, houses).number_get_stats(),
+    "other": SimulationStats(people_table, houses, empty_houses).number_get_stats(),
+    # "other": SimulationStats(people, houses).number_get_stats(),
     "ignore_index": True
 }      
 num_data_df = num_data_df.append(**aux_args)
@@ -177,8 +178,9 @@ for step in range(1, n_iteraciones):
     ############################################### Getting metrics
     ## number data stats
     aux_args = {
-        "other": SimulationStats(people, houses).number_get_stats(),
+        "other": SimulationStats(people_table, houses, empty_houses).number_get_stats(),
         "ignore_index": True
+        # "other": SimulationStats(people, houses).number_get_stats(),
     }      
     num_data_df = num_data_df.append(**aux_args)
         
