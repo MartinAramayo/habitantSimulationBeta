@@ -146,7 +146,7 @@ for step in range(1, n_iteraciones):
     possible_parents = possible_parents.flat
     # toma algunos padres AL AZAR para que tengan hijos
     for nh in possible_parents:
-        hbt.simulating_birth(houses, people, people[nh].nc)
+        hbt.simulating_birth(houses, people, people[int(nh)].nc)
     ###################################### single people GOOD
     single_people = people_table[((people_table[:,5] == False) # not partner
                                  & people_table[:,6]) == True]
@@ -159,7 +159,7 @@ for step in range(1, n_iteraciones):
     single_people = cp.random.choice(single_people[:,0], **a_kargs)
     # toma algunas parejas AL AZAR !!!
     for nh1, nh2 in single_people.reshape((single_people.size//2, 2)):
-        hbt.create_couple(people, nh1, nh2)
+        hbt.create_couple(people, int(nh1), int(nh2))
     ################################## Moving out
     movable = people_table[((people_table[:,4] == False) # not emancipated 
                           & people_table[:,6]) == True] # middle life
@@ -173,8 +173,8 @@ for step in range(1, n_iteraciones):
     empty_houses = hbt.get_empty_house(houses)
 
     for nh, nc in zip(movable, empty_houses): ## use a copy of the current population
-        habitant = people[nh]
-        habitant.moving_out(houses, people, nc)     
+        habitant = people[int(nh)]
+        habitant.moving_out(houses, people, int(nc))     
     ############################################### Getting metrics
     ## number data stats
     aux_args = {
