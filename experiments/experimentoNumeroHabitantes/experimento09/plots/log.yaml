@@ -10,11 +10,11 @@ initial_condition:
   house_size: 3
 comment: |
   Baja fertilidad y muerte prematura no nula
-execution_time_sec: 3335.466186761856
-num_iterations_real: 2000
+execution_time_sec: 150.6093578338623
+num_iterations_real: 784
 MIDDLE_LIFE_START: 20
 MIDDLE_LIFE_END: 50
 LIFE_EXPECTANCY: 85
 INFANCY: 14
 HOUSE_CAP: 10
-execution_time: Thu Jul  1 08:13:21 2021
+execution_time: Thu Jul  1 23:43:56 2021
