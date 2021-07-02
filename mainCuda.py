@@ -139,7 +139,8 @@ for step in range(1, n_iteraciones):
     possible_parents = people_table[(people_table[:,6] # is middle life
                                      & people_table[:,4] # is emancipated
                                      & (people_table[:,5] != 0) # has partner
-                                     & people_table[:,9]) == True] 
+                                     & people_table[:,9]) # is fertile couple
+                                    == True] 
     
     num_parents = int(np.random.binomial(len(possible_parents), p=p_child))
     
@@ -152,7 +153,8 @@ for step in range(1, n_iteraciones):
         hbt.simulating_birth(houses, people, people[int(nh)].nc)
     ###################################### single people GOOD
     single_people = people_table[((people_table[:,5] == False) # not partner
-                                 & people_table[:,6]) == True]
+                                 & people_table[:,6]) # is middle life
+                                 == True]
     
     # get how many new couples are going to be formed
     new_couples = int(np.random.binomial(len(single_people), p=p_partner))//2
@@ -165,7 +167,8 @@ for step in range(1, n_iteraciones):
         hbt.create_couple(people, int(nh1), int(nh2))
     ################################## Moving out
     movable = people_table[((people_table[:,4] == False) # not emancipated 
-                          & people_table[:,6]) == True] # middle life
+                          & people_table[:,6]) # middle life
+                          == True] 
     
     num_movable = int(np.random.binomial(len(movable), p=p_emancipate))
     
